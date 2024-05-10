@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>HOME</h1>
+    <h1>Matching Job Offers</h1>
+    {% for user, job_offers in user_job_matches.items %}
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <ul>
+            {% for job_offer in job_offers %}
+                <li>{{ job_offer.name }} - Matching Percentage: {{ job_offer.matching }}%</li>
+                <ul>
+                    <li>Experience: {{ job_offer.experience }}</li>
+                    <li>Hard Skills:</li>
+                    <ul>
+                        {% for hard_skill in job_offer.job_hardskills.all %}
+                            <li>{{ hard_skill.hardskill.name }} (Level: {{ hard_skill.level }})</li>
+                        {% endfor %}
+                    </ul>
+                    <li>Soft Skills:</li>
+                    <ul>
+                        {% for soft_skill in job_offer.job_softskills.all %}
+                            <li>{{ soft_skill.softskill.name }} (Level: {{ soft_skill.level }})</li>
+                        {% endfor %}
+                    </ul>
+                </ul>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}
