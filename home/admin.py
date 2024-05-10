@@ -1,14 +1,20 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin, ExportActionMixin
+from import_export.formats.base_formats import XLSX, CSV
 from .models import HardSkill, SoftSkill, JobOffer, JobHardSkill, JobSoftSkill, User, UserSoftSkill, UserHardSkill
 
 
+class CustomImportExportMixin(ExportActionMixin):
+    formats = [XLSX, CSV]
+
+
 @admin.register(HardSkill)
-class HardSkillAdmin(admin.ModelAdmin):
+class HardSkillAdmin(CustomImportExportMixin, ImportExportModelAdmin):
     list_display = ('name',)
 
 
 @admin.register(SoftSkill)
-class SoftSkillAdmin(admin.ModelAdmin):
+class SoftSkillAdmin(CustomImportExportMixin, ImportExportModelAdmin):
     list_display = ('name',)
 
 
@@ -21,7 +27,7 @@ class JobSoftSkillInline(admin.TabularInline):
 
 
 @admin.register(JobOffer)
-class JobOfferAdmin(admin.ModelAdmin):
+class JobOfferAdmin(CustomImportExportMixin, ImportExportModelAdmin):
     inlines = [
         JobHardSkillInline,
         JobSoftSkillInline,
@@ -38,7 +44,7 @@ class UserHardSkillInline(admin.TabularInline):
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(CustomImportExportMixin, ImportExportModelAdmin):
     inlines = [
         UserHardSkillInline,
         UserSoftSkillInline,
