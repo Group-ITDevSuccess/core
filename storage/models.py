@@ -12,10 +12,10 @@ class SoftSkill(models.Model):
 
 # JOB OFFER 
 class JobOffer(models.Model):
-    name = models.CharField("Intitulé du poste", max_length=250)  
+    name = models.CharField("Intitulé du poste", max_length=250)
     experience = models.IntegerField('Expérience souhaitée', null=True, blank=True)
 
-	
+
 class JobHardSkill(models.Model):
     job = models.ForeignKey(JobOffer, on_delete=models.CASCADE, related_name='job_hardskills')
     hardskill = models.ForeignKey(HardSkill, verbose_name="Hard skills souhaité", on_delete=models.CASCADE)
@@ -34,7 +34,7 @@ class User(models.Model):
     first_name = models.CharField('Prénom', max_length=100, null=True, blank=True)
     last_name = models.CharField('Nom', max_length=100, null=True, blank=True)
     experience = models.IntegerField('Années expérience', default=0)
-	
+
 
 class UserSoftSkill(models.Model):
     user = models.ForeignKey(User, verbose_name="Utilisateur", on_delete=models.CASCADE)
